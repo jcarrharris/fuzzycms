@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe ArticlesController do
 	it "should call all on Article" do
-		articles_controller use ArticleStub instead
+		get :index
+		
+		Article.should_receive(:all).and_return([])
 	end
 end
