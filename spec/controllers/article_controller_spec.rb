@@ -12,4 +12,26 @@ describe ArticlesController do
 		expect(assign[:articles]).to eq([])
 	end
 
+	describe "#create" do
+		let(:article_params) {{"title" => "title", "body" -> "body"}}
+		let(:model) {FactoryGirl.build(:article)}
+
+		it "should call new on article" do
+
+			Article.should_receive(:new).and_return(model)
+
+			#Factory Girl way of doing it (good for numerous attributes)
+			#params = FactoryGirl.attributes_for(:article)			
+
+			post :create, "article" => article_params
+		end
+
+		it "should assign new article" do
+			Article.should_receive(:new).and_return(model)
+			post :create, "article" => article_params
+
+			expect(assigns[:article]).to eq(model)
+		end
+	end
+
 end
