@@ -10,11 +10,20 @@ describe ArticlesController do
 		Article.should_receive(:all).and_return([])
 		get :index
 		expect(assign[:articles]).to eq([])
+		#assigns[:articles].should =~ [article1, article2]
 	end
 
-	describe "#create" do
-		let(:article_params) {{"title" => "title", "body" -> "body"}}
-		let(:model) {FactoryGirl.build(:article)}
+	it 'should return all the articles' do
+		article1 = FactoryGirl.create(:article)
+		article2 = FactoryGirl.create(:article, :title => "another article")
+
+		get :index # calls the method
+		assigns[:articles].should_received =~ [article1, article2, article3]
+	end
+
+describe "#create" do
+	let(:article_params) {{"title" => "title", "body" -> "body"}}
+	let!(:model) {FactoryGirl.build(:article)}
 
 		it "should call new on article" do
 
